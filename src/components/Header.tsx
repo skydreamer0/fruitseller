@@ -4,9 +4,16 @@ import { ShoppingBasket, Menu, X } from 'lucide-react';
 interface HeaderProps {
   cartItemCount: number;
   onCartClick: () => void;
+  onNavClick: (page: 'home' | 'about') => void;
+  currentPage: 'home' | 'about';
 }
 
-export const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) => {
+export const Header: React.FC<HeaderProps> = ({ 
+  cartItemCount, 
+  onCartClick,
+  onNavClick,
+  currentPage
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -17,16 +24,29 @@ export const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) =>
             <img 
               src={`${import.meta.env.BASE_URL}terroir-fruits-logo.svg`}
               alt="Terroir Fruits Logo" 
-              className="h-10"
+              className="h-10 cursor-pointer"
+              onClick={() => onNavClick('home')}
             />
           </div>
           
           {/* 桌面版導航 */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-700 hover:text-orange-500 transition-colors font-medium">首頁</a>
-            <a href="#" className="text-gray-700 hover:text-orange-500 transition-colors font-medium">商品</a>
-            <a href="#" className="text-gray-700 hover:text-orange-500 transition-colors font-medium">關於我們</a>
-            <a href="#" className="text-gray-700 hover:text-orange-500 transition-colors font-medium">聯絡我們</a>
+            <button 
+              onClick={() => onNavClick('home')}
+              className={`text-gray-700 hover:text-orange-500 transition-colors font-medium ${
+                currentPage === 'home' ? 'text-orange-500' : ''
+              }`}
+            >
+              首頁
+            </button>
+            <button 
+              onClick={() => onNavClick('about')}
+              className={`text-gray-700 hover:text-orange-500 transition-colors font-medium ${
+                currentPage === 'about' ? 'text-orange-500' : ''
+              }`}
+            >
+              關於我們
+            </button>
             <button 
               onClick={onCartClick}
               className="relative focus:outline-none"
@@ -80,34 +100,28 @@ export const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) =>
             </button>
           </div>
           <nav className="mt-8 flex flex-col space-y-6">
-            <a 
-              href="#" 
-              className="text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg"
-              onClick={() => setIsMenuOpen(false)}
+            <button 
+              onClick={() => {
+                onNavClick('home');
+                setIsMenuOpen(false);
+              }}
+              className={`text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg text-left ${
+                currentPage === 'home' ? 'text-orange-500' : ''
+              }`}
             >
               首頁
-            </a>
-            <a 
-              href="#" 
-              className="text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              商品
-            </a>
-            <a 
-              href="#" 
-              className="text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => {
+                onNavClick('about');
+                setIsMenuOpen(false);
+              }}
+              className={`text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg text-left ${
+                currentPage === 'about' ? 'text-orange-500' : ''
+              }`}
             >
               關於我們
-            </a>
-            <a 
-              href="#" 
-              className="text-gray-700 hover:text-orange-500 transition-colors font-medium text-lg"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              聯絡我們
-            </a>
+            </button>
           </nav>
         </div>
       </div>
