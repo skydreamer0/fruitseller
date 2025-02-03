@@ -33,13 +33,6 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, onCancel }
     return tomorrow.toISOString().split('T')[0];
   };
 
-  // 獲取後天的日期
-  const getDayAfterTomorrowDate = () => {
-    const dayAfterTomorrow = new Date();
-    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
-    return dayAfterTomorrow.toISOString().split('T')[0];
-  };
-
   // 獲取星期幾
   const getWeekDay = (dateString: string) => {
     if (!dateString) return '';
