@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fruitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E67E22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D35400;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27AE60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#219A52;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo圖標部分 - 置中並放大 -->
+  <g transform="translate(200,200) scale(8)">
+    <!-- 背景圓 -->
+    <circle cx="0" cy="0" r="15" fill="white" stroke="#2D3436" stroke-width="1"/>
+    
+    <!-- 樹幹和枝條 -->
+    <path d="M0 10 L0 0 M-4 4 Q0 -6 4 4" 
+          stroke="#2D3436" 
+          stroke-width="1.5" 
+          fill="none" 
+          stroke-linecap="round"/>
+    
+    <!-- 葉子 -->
+    <path d="M-2 -2 Q0 -4 2 -2" 
+          fill="url(#leafGradient)" 
+          stroke="#219A52" 
+          stroke-width="0.5"/>
+    
+    <!-- 水果 -->
+    <circle cx="-3" cy="-3" r="2.5" fill="url(#fruitGradient)"/>
+    <circle cx="3" cy="-3" r="2.5" fill="url(#fruitGradient)"/>
+    <circle cx="0" cy="-6" r="2.5" fill="url(#fruitGradient)"/>
+  </g>
+</svg>
