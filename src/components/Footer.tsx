@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <img 
-              src="/src/assets/terroir-fruits-logo.svg" 
+              src={`${import.meta.env.BASE_URL}terroir-fruits-logo.svg`}
               alt="Terroir Fruits Logo" 
               className="h-8"
             />

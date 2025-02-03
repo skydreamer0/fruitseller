@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CheckoutFormData } from '../types';
 
 interface CheckoutFormProps {
@@ -7,7 +7,7 @@ interface CheckoutFormProps {
 }
 
 export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, onCancel }) => {
-  const [formData, setFormData] = React.useState<CheckoutFormData>({
+  const [formData, setFormData] = useState<CheckoutFormData>({
     customerName: '',
     phone: '',
     email: '',
@@ -26,11 +26,34 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, onCancel }
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // 計算最早可配送日期（隔天開始）
-  const getMinDeliveryDate = () => {
+  // 獲取明天的日期
+  const getTomorrowDate = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow.toISOString().split('T')[0];
+  };
+
+  // 獲取後天的日期
+  const getDayAfterTomorrowDate = () => {
+    const dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    return dayAfterTomorrow.toISOString().split('T')[0];
+  };
+
+  // 獲取星期幾
+  const getWeekDay = (dateString: string) => {
+    if (!dateString) return '';
+    const weekDays = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+    const date = new Date(dateString);
+    return weekDays[date.getDay()];
+  };
+
+  // 設置快捷日期
+  const setQuickDate = (days: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    const dateString = date.toISOString().split('T')[0];
+    setFormData(prev => ({ ...prev, deliveryDate: dateString }));
   };
 
   return (
@@ -100,33 +123,75 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSubmit, onCancel }
         <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700">
           配送日期
         </label>
-        <input
-          type="date"
-          id="deliveryDate"
-          name="deliveryDate"
-          required
-          min={getMinDeliveryDate()}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-          value={formData.deliveryDate}
-          onChange={handleChange}
-        />
+        <div className="mt-1 space-y-2">
+          <div className="flex space-x-2">
+            <button
+              type="button"
+              onClick={() => setQuickDate(1)}
+              className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors"
+            >
+              明天
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuickDate(2)}
+              className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors"
+            >
+              後天
+            </button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="date"
+              id="deliveryDate"
+              name="deliveryDate"
+              required
+              min={getTomorrowDate()}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+              value={formData.deliveryDate}
+              onChange={handleChange}
+            />
+            <span className="text-gray-600">
+              {getWeekDay(formData.deliveryDate)}
+            </span>
+          </div>
+        </div>
       </div>
 
       <div>
         <label htmlFor="deliveryTime" className="block text-sm font-medium text-gray-700">
           配送時段
         </label>
-        <select
-          id="deliveryTime"
-          name="deliveryTime"
-          required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-          value={formData.deliveryTime}
-          onChange={handleChange}
-        >
-          <option value="morning">上午 (09:00-12:00)</option>
-          <option value="afternoon">下午 (14:00-18:00)</option>
-        </select>
+        <div className="mt-2 grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => setFormData(prev => ({ ...prev, deliveryTime: 'morning' }))}
+            className={`py-3 px-4 rounded-md text-sm font-medium transition-colors
+              ${formData.deliveryTime === 'morning'
+                ? 'bg-green-600 text-white'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
+              }`}
+          >
+            上午
+            <span className="block text-xs mt-1 opacity-75">
+              09:00-12:00
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setFormData(prev => ({ ...prev, deliveryTime: 'afternoon' }))}
+            className={`py-3 px-4 rounded-md text-sm font-medium transition-colors
+              ${formData.deliveryTime === 'afternoon'
+                ? 'bg-green-600 text-white'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
+              }`}
+          >
+            下午
+            <span className="block text-xs mt-1 opacity-75">
+              14:00-18:00
+            </span>
+          </button>
+        </div>
       </div>
 
       <div className="flex justify-end space-x-4 pt-4">

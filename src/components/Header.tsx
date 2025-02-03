@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick }) =>
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <img 
-              src="/src/assets/terroir-fruits-logo.svg" 
+              src={`${import.meta.env.BASE_URL}terroir-fruits-logo.svg`}
               alt="Terroir Fruits Logo" 
               className="h-10"
             />
