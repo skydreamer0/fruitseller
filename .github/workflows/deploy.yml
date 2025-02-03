@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 當 main 分支有推送時觸發
+  workflow_dispatch:  # 允許手動觸發
+
+permissions:
+  contents: write  # 允許 workflow 寫入倉庫內容
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL || '/' }}
+          NODE_ENV: production
+
+      - name: Add .nojekyll file
+        run: touch ./dist/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist  # Vite 的默認輸出目錄
+          branch: gh-pages  # 部署到 gh-pages 分支
+          clean: true  # 清理舊的文件
+          clean-exclude: |
+            .nojekyll
+            CNAME 
