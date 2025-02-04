@@ -1,3 +1,9 @@
+// 底部元件
+// 位置：src/components/Footer.tsx
+// 功能：顯示底部元件
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React from 'react';
 
 export const Footer: React.FC = () => {
@@ -22,7 +28,8 @@ export const Footer: React.FC = () => {
             <h3 className="font-semibold text-gray-800">聯絡資訊</h3>
             <p className="text-gray-600">電話：(02) 2345-6789</p>
             <p className="text-gray-600">地址：台北市信義區信義路五段7號</p>
-            <p className="text-gray-600">Email：contact@terroirfruits.com</p>
+            <p className="text-gray-600">Email：terroirfruits@gmail.com
+            </p>
           </div>
           
           <div className="space-y-2">

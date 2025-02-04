@@ -1,3 +1,9 @@
+// 關於我們元件
+// 位置：src/components/AboutUs.tsx
+// 功能：顯示關於我們元件
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React from 'react';
 import { Calendar, Package, Brain, Leaf, ChefHat, BarChart } from 'lucide-react';
 

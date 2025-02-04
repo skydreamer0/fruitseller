@@ -1,3 +1,9 @@
+// 頭部元件
+// 位置：src/components/Header.tsx
+// 功能：顯示頭部元件
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React, { useState } from 'react';
 import { ShoppingBasket, Menu, X } from 'lucide-react';
 
@@ -17,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white text-gray-800 shadow-lg relative">
+    <header className="bg-white text-gray-800 shadow-lg fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">

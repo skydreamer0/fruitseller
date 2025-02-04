@@ -1,3 +1,9 @@
+// 水果數據
+// 位置：src/data/fruits.ts
+// 功能：提供水果數據
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import { FruitItem } from '../types';
 
 export const fruits: FruitItem[] = [

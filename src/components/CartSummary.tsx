@@ -1,3 +1,9 @@
+// 購物車摘要元件
+// 位置：src/components/CartSummary.tsx
+// 功能：顯示購物車摘要
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React from 'react';
 import { CartItem } from '../types';
 import { fruits } from '../data/fruits';

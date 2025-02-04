@@ -1,3 +1,9 @@
+// 結帳表單元件
+// 位置：src/components/CheckoutForm.tsx
+// 功能：顯示結帳表單
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React, { useState } from 'react';
 import { CheckoutFormData } from '../types';
 
