@@ -1,3 +1,9 @@
+// 主應用程式
+// 位置：src/App.tsx
+// 功能：主應用程式
+// 日期：2025-02-04
+// 版本：1.0.0
+
 import React, { useState, useRef } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -96,7 +102,7 @@ function App() {
         ) : (
           <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-8">精選水果</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {fruits.map(fruit => (
                 <FruitCard
                   key={fruit.id}
