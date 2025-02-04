@@ -1,24 +1,65 @@
 import { OrderInfo, CartItem, CheckoutFormData } from '../types';
 import { fruits } from '../data/fruits';
 
-// 這個介面將來會用於連接 Google Sheets API
 export interface OrderServiceInterface {
   submitOrder: (orderData: OrderInfo) => Promise<void>;
   getOrders: () => Promise<OrderInfo[]>;
 }
 
-// 模擬訂單服務實現
-class MockOrderService implements OrderServiceInterface {
-  private orders: OrderInfo[] = [];
+interface GASResponse {
+  error?: string;
+  orders?: OrderInfo[];
+  message?: string;
+  success?: boolean;
+}
+
+export class GASOrderService implements OrderServiceInterface {
+  private async fetchGAS(method: 'GET' | 'POST', data?: OrderInfo): Promise<GASResponse> {
+    try {
+      const response = await fetch(import.meta.env.VITE_GAS_WEB_APP_URL, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data ? JSON.stringify(data) : undefined,
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || '操作失敗');
+      }
+
+      return result;
+    } catch (error) {
+      console.error('API 請求失敗:', error);
+      throw error;
+    }
+  }
 
   async submitOrder(orderData: OrderInfo): Promise<void> {
-    this.orders.push(orderData);
-    console.log('Order submitted:', orderData);
-    // 這裡將來會改為實際的 Google Sheets API 調用
+    try {
+      await this.fetchGAS('POST', orderData);
+      console.log('訂單已成功提交');
+    } catch (error) {
+      console.error('提交訂單時發生錯誤:', error);
+      throw new Error('訂單提交失敗');
+    }
   }
 
   async getOrders(): Promise<OrderInfo[]> {
-    return this.orders;
+    try {
+      const response = await this.fetchGAS('GET');
+      return response.orders || [];
+    } catch (error) {
+      console.error('獲取訂單時發生錯誤:', error);
+      throw new Error('獲取訂單失敗');
+    }
   }
 }
 
@@ -45,4 +86,4 @@ export const createOrder = (formData: CheckoutFormData, cartItems: CartItem[]): 
 };
 
 // 導出訂單服務實例
-export const orderService = new MockOrderService();
+export const orderService = new GASOrderService();
