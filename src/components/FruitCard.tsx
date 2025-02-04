@@ -111,37 +111,41 @@ export const FruitCard: React.FC<FruitCardProps> = ({
         {/* 頂部名稱區域 */}
         <div className="absolute top-0 left-0 right-0 p-4 md:p-6 
                       bg-gradient-to-b from-black/70 to-transparent">
-          <div className="relative flex justify-center items-center overflow-hidden">
+          <div className="relative flex justify-center items-center">
             {/* 中文名稱 */}
-            <motion.h3 
-              initial={{ opacity: 0, x: '50%' }}
-              animate={{ opacity: 1, x: '-100%' }}
-              transition={{
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1], // custom bezier curve
-                opacity: { duration: 0.3 }
-              }}
-              className="text-2xl md:text-3xl font-medium text-white whitespace-nowrap"
-            >
-              {fruit.name}
-            </motion.h3>
+            <div className="flex-1 flex justify-end">
+              <motion.h3 
+                initial={{ opacity: 0, x: '20%' }}
+                animate={{ opacity: 1, x: '0%' }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  opacity: { duration: 0.3 }
+                }}
+                className="text-2xl md:text-3xl font-medium text-white whitespace-nowrap mr-3"
+              >
+                {fruit.name}
+              </motion.h3>
+            </div>
 
-            {/* 分隔點 */}
-            <div className="w-2 h-2 rounded-full bg-white/50 mx-4 shrink-0" />
+            {/* 分隔線 */}
+            <div className="h-8 w-px bg-white/30" />
 
             {/* 英文名稱 */}
-            <motion.p 
-              initial={{ opacity: 0, x: '-50%' }}
-              animate={{ opacity: 0.9, x: '100%' }}
-              transition={{
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1], // custom bezier curve
-                opacity: { duration: 0.3 }
-              }}
-              className="text-xl md:text-2xl font-light text-white/90 whitespace-nowrap"
-            >
-              {fruit.nameEn}
-            </motion.p>
+            <div className="flex-1 flex justify-start">
+              <motion.p 
+                initial={{ opacity: 0, x: '-20%' }}
+                animate={{ opacity: 0.9, x: '0%' }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  opacity: { duration: 0.3 }
+                }}
+                className="text-xl md:text-2xl font-light text-white/90 whitespace-nowrap ml-3"
+              >
+                {fruit.nameEn}
+              </motion.p>
+            </div>
           </div>
         </div>
 
